@@ -1,6 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<oracle.dbtools.crest.model.design.relational.RelationalDesign>
-   <object objectType="Table" objectID="EEB14635-7F3F-AAD0-6281-76E7871477F2" name="CATEGORIAS" seqName="seg_0"/>
-   <object objectType="Table" objectID="7ABC14ED-B209-F8B1-2F1C-55A410A5790F" name="PREGUNTAS" seqName="seg_0"/>
-   <object objectType="Table" objectID="0DE362F8-845D-8BC5-529A-EA48B53C913E" name="RESPUESTAS" seqName="seg_0"/>
-</oracle.dbtools.crest.model.design.relational.RelationalDesign>
