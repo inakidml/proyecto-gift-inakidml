@@ -18,6 +18,7 @@ public class Vprincipal extends javax.swing.JFrame {
      */
     public Vprincipal() {
         initComponents();
+        
     }
 
     /**

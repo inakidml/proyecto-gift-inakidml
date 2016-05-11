@@ -18,13 +18,14 @@ public class VNuevaPregunta extends javax.swing.JFrame {
      */
     public VNuevaPregunta() {
         initComponents();
-       //CheckBox5.setVisible(false);
+        //CheckBox5.setVisible(false);
         //heckBox6.setVisible(false);
         jScrollPane6.setVisible(false);
         jTextArea6.setVisible(false);
         jScrollPane7.setVisible(false);
         jTextArea7.setVisible(false);
         jButton2.setVisible(false);
+      
         /*
          DefaultComboBoxModel modelo = new DefaultComboBoxModel();//Rellenar JComboBox
          modelo.addElement("hola");
@@ -68,7 +69,6 @@ public class VNuevaPregunta extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
 
         setTitle("Nueva Pregunta");
-        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Seleccione la Categoría"));
 
@@ -276,14 +276,21 @@ public class VNuevaPregunta extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         jScrollPane6.setVisible(true);
         jTextArea6.setVisible(true);
-       //CheckBox5.setVisible(true);
+        //CheckBox5.setVisible(true);
         jButton2.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jScrollPane7.setVisible(true);
-        jTextArea7.setVisible(true);
-        //heckBox6.setVisible(true);
+        //jScrollPane7.setVisible(true);
+        //jTextArea7.setVisible(true);
+        //CheckBox6.setVisible(true);
+        PanelPrueba np = new PanelPrueba();
+        this.getContentPane().add(np);
+       
+        np.setVisible(true);
+        this.pack();
+         getContentPane().validate();
+        this.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
