@@ -11,11 +11,19 @@ package ask2gift;
  */
 public class PanelRespuesta extends javax.swing.JPanel {
 
+    private VNuevaPregunta vpregunta = null;
+
     /**
      * Creates new form PanelRespuesta
      */
-    public PanelRespuesta() {
+    public PanelRespuesta(VNuevaPregunta v) {
+        vpregunta = v;
         initComponents();
+    }
+
+    public String devRespuesta() {
+        String s = jTextField1.getText();
+        return s;
     }
 
     /**
@@ -32,6 +40,12 @@ public class PanelRespuesta extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
 
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -44,9 +58,9 @@ public class PanelRespuesta extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jCheckBox1)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -86,6 +100,15 @@ public class PanelRespuesta extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+        //decir que me han pulsado
+        vpregunta.pulsadaCheck(this);// si es verdadera se lo digo a la ventana de la pregunta
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    public void cambiarCheck(boolean b) {// si hay un cambio de verdadera en otra respuesta, borra esta
+        jCheckBox1.setSelected(b);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBox1;

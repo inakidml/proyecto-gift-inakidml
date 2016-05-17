@@ -5,6 +5,9 @@
  */
 package ask2gift;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author 7fprog02
@@ -12,13 +15,14 @@ package ask2gift;
 public class Vprincipal extends javax.swing.JFrame {
 
     private VNuevaPregunta vnuevapregunta = null;
-
+    private VNuevaCategoria vnuevacategoria = null;
+    private List<Categoria> categorias=new ArrayList<>();
     /**
      * Creates new form Vprincipal
      */
     public Vprincipal() {
         initComponents();
-        
+
     }
 
     /**
@@ -95,6 +99,11 @@ public class Vprincipal extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorías", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         jButton5.setText("Nueva");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Editar");
 
@@ -179,11 +188,22 @@ public class Vprincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(vnuevapregunta==null){
-        vnuevapregunta =new VNuevaPregunta();
+        if (getVnuevapregunta() == null) {
+            vnuevapregunta = new VNuevaPregunta();
         }
-        vnuevapregunta.setVisible(true);
+        getVnuevapregunta().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (vnuevacategoria == null) {
+            vnuevacategoria = new VNuevaCategoria();
+            vnuevacategoria.setVprincipal(this);
+            
+        }
+        vnuevacategoria.setVisible(true);
+        vnuevacategoria.limpiar();
+                                       
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,4 +253,25 @@ public class Vprincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the vnuevapregunta
+     */
+    public VNuevaPregunta getVnuevapregunta() {
+        return vnuevapregunta;
+    }
+
+    /**
+     * @return the vnuevacategoria
+     */
+    public VNuevaCategoria getVnuevacategoria() {
+        return vnuevacategoria;
+    }
+
+    /**
+     * @return the categorias
+     */
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
 }
