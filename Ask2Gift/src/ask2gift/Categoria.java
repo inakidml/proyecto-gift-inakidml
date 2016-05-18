@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Categoria {
 
-    
+    private int id;
     private String Nombre;
     private List<Pregunta> preguntas=new ArrayList<>();
     
@@ -39,6 +39,20 @@ public class Categoria {
      */
     public List<Pregunta> getPreguntas() {
         return preguntas;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

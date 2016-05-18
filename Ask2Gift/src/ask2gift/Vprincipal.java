@@ -16,12 +16,17 @@ public class Vprincipal extends javax.swing.JFrame {
 
     private VNuevaPregunta vnuevapregunta = null;
     private VNuevaCategoria vnuevacategoria = null;
-    private List<Categoria> categorias=new ArrayList<>();
+    private VEditarCat veditarcat = null;
+    private List<Categoria> categorias = new ArrayList<>();
+    private GestorBD bd = new GestorBD();
+
     /**
      * Creates new form Vprincipal
      */
     public Vprincipal() {
         initComponents();
+        bd.setVprincipal(this);
+        bd.cargarListaCat();
 
     }
 
@@ -106,6 +111,11 @@ public class Vprincipal extends javax.swing.JFrame {
         });
 
         jButton6.setText("Editar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -198,12 +208,24 @@ public class Vprincipal extends javax.swing.JFrame {
         if (vnuevacategoria == null) {
             vnuevacategoria = new VNuevaCategoria();
             vnuevacategoria.setVprincipal(this);
-            
+            vnuevacategoria.setBd(bd);
+
         }
+
         vnuevacategoria.setVisible(true);
         vnuevacategoria.limpiar();
-                                       
+
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        if (veditarcat == null) {
+            veditarcat = new VEditarCat();
+            veditarcat.setVprincipal(this);
+            veditarcat.setBd(bd);
+        }
+        veditarcat.setVisible(true);
+        veditarcat.rellenarCombo();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,6 +294,8 @@ public class Vprincipal extends javax.swing.JFrame {
      * @return the categorias
      */
     public List<Categoria> getCategorias() {
+
         return categorias;
     }
+
 }

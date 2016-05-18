@@ -12,12 +12,14 @@ package ask2gift;
 public class VNuevaCategoria extends javax.swing.JFrame {
 
     private Vprincipal vprincipal = null;
+    private GestorBD bd;
 
     /**
      * Creates new form VNuevaCategoria
      */
     public VNuevaCategoria() {
         initComponents();
+
     }
 
     /**
@@ -129,9 +131,15 @@ public class VNuevaCategoria extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if (!jTextField2.getText().equals("")) {
+            int id;
             Categoria c = new Categoria();
             c.setNombre(jTextField2.getText());
-            vprincipal.getCategorias().add(c);
+
+            id = bd.insertarCategoria(c.getNombre()); // uso id para probar
+            bd.cargarListaCat();
+            //c.setId(id); //para probar
+
+            //vprincipal.getCategorias().add(c); // para probar
         }
         limpiar();
 
@@ -144,8 +152,12 @@ public class VNuevaCategoria extends javax.swing.JFrame {
     public void limpiar() {
         jTextField2.setText("");
         String s = "";
+
         for (Categoria cat : vprincipal.getCategorias()) {
+            s += cat.getId();
+            s += ".- ";
             s += cat.getNombre();
+
             s += "\n";
 
         }
@@ -203,5 +215,12 @@ public class VNuevaCategoria extends javax.swing.JFrame {
      */
     public void setVprincipal(Vprincipal vprincipal) {
         this.vprincipal = vprincipal;
+    }
+
+    /**
+     * @param bd the bd to set
+     */
+    public void setBd(GestorBD bd) {
+        this.bd = bd;
     }
 }
