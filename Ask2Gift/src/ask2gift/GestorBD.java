@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.jdbc.OracleTypes;
@@ -66,6 +65,7 @@ public class GestorBD {
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         desconectar();
+        cargarListaCat();
         return id;
     }
 
@@ -85,6 +85,25 @@ public class GestorBD {
         }
         desconectar();
         cargarListaCat();
+    }
+    public void editarCat(String oldNombre, String newNombre){
+     conectar();
+        // Llamada a procedimiento almacenado
+        // Creamos el statement
+        String sql = "{ call updates.update_categoria(?,?) }";
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            // Cargamos los parametros de entrada IN
+            cs.setString(1, oldNombre);//como primer valor, mando el nombre de la cat
+            cs.setString(2, newNombre);// segundo el nuevo nombre
+            cs.execute();
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        desconectar();
+        cargarListaCat();
+    
     }
 
     public void cargarListaCat() {
@@ -109,8 +128,53 @@ public class GestorBD {
         } catch (SQLException ex) {
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         desconectar();
+    }
+    
+    public int insertarPregunta(String texto, String cat){
+    int id = -1;
+        conectar();
+        // Llamada a procedimiento almacenado
+        // Creamos el statement
+        String sql = "{ call inserts.insertar_pregunta(?,?,?) }";
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            // Cargamos los parametros de entrada IN
+            cs.setString(1, texto);//como primer valor, mando el texto de la pr
+            cs.setString(2, cat);
+            cs.registerOutParameter(3, OracleTypes.INTEGER); //como tercer valor recibo un integer con el ID generado
+            cs.execute();
+            id = cs.getInt(3);//paso a una variable el integer
+            //System.out.println(id + " " + nombre);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        desconectar();
+        return id;
+    }
+    
+    public int insertarRespuesta(String texto,int valor, int id_pr){
+    int id = -1;
+        conectar();
+        // Llamada a procedimiento almacenado
+        // Creamos el statement
+        String sql = "{ call inserts.insertar_respuesta(?,?,?,?) }";
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            // Cargamos los parametros de entrada IN
+            cs.setString(1, texto);//como primer valor, mando el texto de la pr
+            cs.setInt(2, valor);
+            cs.setInt(3, id_pr);
+            cs.registerOutParameter(4, OracleTypes.INTEGER); //como segundo valor recibo un integer con el ID generado
+            cs.execute();
+            id = cs.getInt(4);//paso a una variable el integer
+            //System.out.println(id + " " + nombre);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        desconectar();
+        return id;
     }
 
     public void oraclesqlejemplo() throws SQLException {

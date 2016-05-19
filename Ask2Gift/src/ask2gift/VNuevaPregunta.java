@@ -8,6 +8,7 @@ package ask2gift;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -17,25 +18,23 @@ public class VNuevaPregunta extends javax.swing.JFrame {
 
     private List<PanelRespuesta> panelesR = new ArrayList<>();
     private PanelRespuesta verdadera = null;
+    private GestorBD bd = null;
+    private Vprincipal vprincipal = null;
 
     /**
      * Creates new form VNuevaPregunta
      */
     public VNuevaPregunta() {
         initComponents();
-
+        anadirPanelResp();
+        
+        
         /*
          DefaultComboBoxModel modelo = new DefaultComboBoxModel();//Rellenar JComboBox
          modelo.addElement("hola");
          modelo.addElement("adios");
          jComboBox1.setModel(modelo);
          */
-        jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.Y_AXIS));
-        PanelRespuesta nuevo = new PanelRespuesta(this);
-        panelesR.add(nuevo);
-        jPanel4.add(nuevo);
-
-        pack();
     }
 
     /**
@@ -115,6 +114,11 @@ public class VNuevaPregunta extends javax.swing.JFrame {
         );
 
         jButton3.setText("Añadir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Cancelar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -209,27 +213,85 @@ public class VNuevaPregunta extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+    
+    public void rellenarCombo() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();//Rellenar JComboBox
+        for (Categoria cat : vprincipal.getCategorias()) {
+            modelo.addElement(cat.getNombre());
+        }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        jComboBox1.setModel(modelo);
+    }
+    public void limpiar(){
+        rellenarCombo();
+        for (PanelRespuesta panel : panelesR) {
+            jPanel4.remove(panel);
+        }
+        jTextArea1.setText("");
+        panelesR.removeAll(panelesR);
+        anadirPanelResp();
+    
+    }
+    public void anadirPanelResp() {
+        jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.Y_AXIS));
         PanelRespuesta nuevo = new PanelRespuesta(this);
-        jPanel4.add(nuevo);
         panelesR.add(nuevo);
+        jPanel4.add(nuevo);
+
         pack();
+    }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        anadirPanelResp();
         if (panelesR.size() >= 8) {
             jButton2.setVisible(false);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       // Cancelar
+        // Cancelar
         this.setVisible(false);
-        for (PanelRespuesta panel : panelesR) {
-            jPanel4.remove(panel);
-        }
-        jTextArea1.setText("");
-        panelesR.removeAll(panelesR);
+        limpiar();
+        
 
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (!jTextArea1.equals("")) {
+            Categoria c = new Categoria();
+            Pregunta p = new Pregunta();
+            String texto = jTextArea1.getText();
+            String nomCat = (String) jComboBox1.getSelectedItem();
+            c.setNombre(nomCat);
+            int indexCat = vprincipal.getCategorias().indexOf(c);
+            int id_pr = bd.insertarPregunta(texto, nomCat);
+            p.setTexto_pr(texto);
+            p.setId_cat_pr(indexCat);
+            p.setCategoria(c);
+            p.setId_pr(id_pr);
+            System.out.println(indexCat);
+            vprincipal.getCategorias().get(indexCat).getPreguntas().add(p);
+            int index_pr=vprincipal.getCategorias().get(indexCat).getPreguntas().indexOf(p);
+            
+            for (PanelRespuesta panelR : panelesR) {
+                Respuesta r = new Respuesta();
+                int valor;
+                String texto_rp = panelR.devRespuesta();
+                r.setId_pr_rp(id_pr);
+                System.out.println(id_pr+" =id_pr");
+                r.setTexto_rp(texto_rp);
+                r.setPregunta(p);
+                if (panelR.equals(verdadera)) {
+                    valor = 1;
+                } else {
+                    valor = 0;
+                }
+                r.setValor(valor);
+                int id_rp = bd.insertarRespuesta(texto, valor, id_pr);
+                vprincipal.getCategorias().get(indexCat).getPreguntas().get(index_pr).getRespuestas().add(r);
+            }
+
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
     public void pulsadaCheck(PanelRespuesta r) {
         verdadera = r;//se ha seleccionado alguna respuesta como verdadera, guardamos ref de panel
         for (PanelRespuesta panel : panelesR) {
@@ -288,4 +350,18 @@ public class VNuevaPregunta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @param bd the bd to set
+     */
+    public void setBd(GestorBD bd) {
+        this.bd = bd;
+    }
+
+    /**
+     * @param vprincipal the vprincipal to set
+     */
+    public void setVprincipal(Vprincipal vprincipal) {
+        this.vprincipal = vprincipal;
+    }
 }

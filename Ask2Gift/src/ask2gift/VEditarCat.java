@@ -152,7 +152,11 @@ public class VEditarCat extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String oldNombre = (String)jComboBox1.getSelectedItem();
+        String newNombre = (String)jTextField1.getText();
+        bd.editarCat(oldNombre, newNombre);
+        rellenarCombo();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

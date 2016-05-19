@@ -200,7 +200,10 @@ public class Vprincipal extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (getVnuevapregunta() == null) {
             vnuevapregunta = new VNuevaPregunta();
+            vnuevapregunta.setVprincipal(this);
+            vnuevapregunta.setBd(bd);
         }
+        vnuevapregunta.limpiar();
         getVnuevapregunta().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -136,7 +136,7 @@ public class VNuevaCategoria extends javax.swing.JFrame {
             c.setNombre(jTextField2.getText());
 
             id = bd.insertarCategoria(c.getNombre()); // uso id para probar
-            bd.cargarListaCat();
+            
             //c.setId(id); //para probar
 
             //vprincipal.getCategorias().add(c); // para probar

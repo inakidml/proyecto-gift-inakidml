@@ -19,6 +19,28 @@ public class Pregunta {
     private List<Respuesta> respuestas=new ArrayList<>();
     private Categoria categoria;
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + this.id_pr;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pregunta other = (Pregunta) obj;
+        if (this.id_pr != other.id_pr) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * @return the id_pr
      */
