@@ -5,6 +5,8 @@
  */
 package ask2gift;
 
+import java.util.List;
+
 /**
  *
  * @author 7fprog02
@@ -13,6 +15,7 @@ public class VNuevaCategoria extends javax.swing.JFrame {
 
     private Vprincipal vprincipal = null;
     private GestorBD bd;
+    private List<Categoria> categorias = null;
 
     /**
      * Creates new form VNuevaCategoria
@@ -38,6 +41,7 @@ public class VNuevaCategoria extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nueva Categoría"));
 
@@ -99,6 +103,8 @@ public class VNuevaCategoria extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,7 +115,8 @@ public class VNuevaCategoria extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)))
                 .addContainerGap())
         );
@@ -121,7 +128,9 @@ public class VNuevaCategoria extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jLabel1))
                 .addContainerGap())
         );
 
@@ -134,14 +143,17 @@ public class VNuevaCategoria extends javax.swing.JFrame {
             int id;
             Categoria c = new Categoria();
             c.setNombre(jTextField2.getText());
+            if (!categorias.contains(c)) {
+                id = bd.insertarCategoria(c.getNombre()); // uso id para probar
+                limpiar();
+            } else {
 
-            id = bd.insertarCategoria(c.getNombre()); // uso id para probar
-            
+                jLabel1.setText("Esa categoría ya existe");
+            }
+
             //c.setId(id); //para probar
-
             //vprincipal.getCategorias().add(c); // para probar
         }
-        limpiar();
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -162,6 +174,7 @@ public class VNuevaCategoria extends javax.swing.JFrame {
 
         }
         jTextArea1.setText(s);
+        jLabel1.setText("");
 
     }
 
@@ -203,6 +216,7 @@ public class VNuevaCategoria extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -222,5 +236,12 @@ public class VNuevaCategoria extends javax.swing.JFrame {
      */
     public void setBd(GestorBD bd) {
         this.bd = bd;
+    }
+
+    /**
+     * @param categorias the categorias to set
+     */
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 }

@@ -17,6 +17,7 @@ public class Vprincipal extends javax.swing.JFrame {
     private VNuevaPregunta vnuevapregunta = null;
     private VNuevaCategoria vnuevacategoria = null;
     private VEditarCat veditarcat = null;
+    private VVerPr vverpr=null;
     private List<Categoria> categorias = new ArrayList<>();
     private GestorBD bd = new GestorBD();
 
@@ -27,6 +28,14 @@ public class Vprincipal extends javax.swing.JFrame {
         initComponents();
         bd.setVprincipal(this);
         bd.cargarListaCat();
+        if (categorias.size()>0) {
+            for (Categoria categoria : categorias) {
+                bd.cargarListaPr(categoria);
+                for (Pregunta pregunta : categoria.getPreguntas()) {
+                    bd.cargarListaRp(pregunta);
+                }
+            }
+        }
 
     }
 
@@ -71,6 +80,11 @@ public class Vprincipal extends javax.swing.JFrame {
         jButton3.setText("Borrar");
 
         jButton4.setText("Ver");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -202,6 +216,7 @@ public class Vprincipal extends javax.swing.JFrame {
             vnuevapregunta = new VNuevaPregunta();
             vnuevapregunta.setVprincipal(this);
             vnuevapregunta.setBd(bd);
+            
         }
         vnuevapregunta.limpiar();
         getVnuevapregunta().setVisible(true);
@@ -212,6 +227,7 @@ public class Vprincipal extends javax.swing.JFrame {
             vnuevacategoria = new VNuevaCategoria();
             vnuevacategoria.setVprincipal(this);
             vnuevacategoria.setBd(bd);
+            vnuevacategoria.setCategorias(categorias);
 
         }
 
@@ -229,6 +245,17 @@ public class Vprincipal extends javax.swing.JFrame {
         veditarcat.setVisible(true);
         veditarcat.rellenarCombo();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       if (vverpr == null) {
+            vverpr = new VVerPr();
+            vverpr.setVprincipal(this);
+            vverpr.setBd(bd);
+            vverpr.setCategorias(categorias);
+        }
+        vverpr.setVisible(true);
+        vverpr.rellenarCombo();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -27,14 +27,7 @@ public class VNuevaPregunta extends javax.swing.JFrame {
     public VNuevaPregunta() {
         initComponents();
         anadirPanelResp();
-        
-        
-        /*
-         DefaultComboBoxModel modelo = new DefaultComboBoxModel();//Rellenar JComboBox
-         modelo.addElement("hola");
-         modelo.addElement("adios");
-         jComboBox1.setModel(modelo);
-         */
+
     }
 
     /**
@@ -213,7 +206,7 @@ public class VNuevaPregunta extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
-    
+
     public void rellenarCombo() {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();//Rellenar JComboBox
         for (Categoria cat : vprincipal.getCategorias()) {
@@ -222,7 +215,8 @@ public class VNuevaPregunta extends javax.swing.JFrame {
 
         jComboBox1.setModel(modelo);
     }
-    public void limpiar(){
+
+    public void limpiar() {
         rellenarCombo();
         for (PanelRespuesta panel : panelesR) {
             jPanel4.remove(panel);
@@ -230,8 +224,9 @@ public class VNuevaPregunta extends javax.swing.JFrame {
         jTextArea1.setText("");
         panelesR.removeAll(panelesR);
         anadirPanelResp();
-    
+
     }
+
     public void anadirPanelResp() {
         jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.Y_AXIS));
         PanelRespuesta nuevo = new PanelRespuesta(this);
@@ -251,7 +246,7 @@ public class VNuevaPregunta extends javax.swing.JFrame {
         // Cancelar
         this.setVisible(false);
         limpiar();
-        
+
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -263,21 +258,22 @@ public class VNuevaPregunta extends javax.swing.JFrame {
             String nomCat = (String) jComboBox1.getSelectedItem();
             c.setNombre(nomCat);
             int indexCat = vprincipal.getCategorias().indexOf(c);
+            c=vprincipal.getCategorias().get(indexCat);
             int id_pr = bd.insertarPregunta(texto, nomCat);
             p.setTexto_pr(texto);
-            p.setId_cat_pr(indexCat);
+            p.setId_cat_pr(c.getId());
             p.setCategoria(c);
             p.setId_pr(id_pr);
-            System.out.println(indexCat);
-            vprincipal.getCategorias().get(indexCat).getPreguntas().add(p);
-            int index_pr=vprincipal.getCategorias().get(indexCat).getPreguntas().indexOf(p);
-            
+            //System.out.println(indexCat);
+            c.getPreguntas().add(p);
+            int index_pr = vprincipal.getCategorias().get(indexCat).getPreguntas().indexOf(p);
+
             for (PanelRespuesta panelR : panelesR) {
                 Respuesta r = new Respuesta();
                 int valor;
                 String texto_rp = panelR.devRespuesta();
                 r.setId_pr_rp(id_pr);
-                System.out.println(id_pr+" =id_pr");
+                //System.out.println(id_pr + " =id_pr");
                 r.setTexto_rp(texto_rp);
                 r.setPregunta(p);
                 if (panelR.equals(verdadera)) {
@@ -286,10 +282,10 @@ public class VNuevaPregunta extends javax.swing.JFrame {
                     valor = 0;
                 }
                 r.setValor(valor);
-                int id_rp = bd.insertarRespuesta(texto, valor, id_pr);
-                vprincipal.getCategorias().get(indexCat).getPreguntas().get(index_pr).getRespuestas().add(r);
+                int id_rp = bd.insertarRespuesta(texto_rp, valor, id_pr);
+                p.getRespuestas().add(r);
             }
-
+            limpiar();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
     public void pulsadaCheck(PanelRespuesta r) {
