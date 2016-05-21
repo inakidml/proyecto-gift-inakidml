@@ -144,7 +144,8 @@ public class VNuevaCategoria extends javax.swing.JFrame {
             Categoria c = new Categoria();
             c.setNombre(jTextField2.getText());
             if (!categorias.contains(c)) {
-                id = bd.insertarCategoria(c.getNombre()); // uso id para probar
+                c.setId(bd.insertarCategoria(c.getNombre())); // nos devuelve el id de oracle
+                categorias.add(c);
                 limpiar();
             } else {
 

@@ -48,6 +48,32 @@ public class GestorBD {
         }
     }
 
+    public void cargarListaCat() { //llamo en el constructor de vprincipal, en editarCat y borrarCat
+        conectar();
+        // Llamada a procedimiento almacenado
+        // Creamos el statement
+        String sql = "{ call selects.select_categorias(?) }";
+        try {
+            vprincipal.getCategorias().removeAll(vprincipal.getCategorias());
+            CallableStatement cs = conn.prepareCall(sql);
+            cs.registerOutParameter(1, OracleTypes.CURSOR);
+            cs.execute();
+            try (ResultSet rs = (ResultSet) cs.getObject(1)) {
+                while (rs.next()) {
+                    Categoria c = new Categoria();
+                    c.setId(rs.getInt(1));
+                    c.setNombre(rs.getString(2));
+                    vprincipal.getCategorias().add(c);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        desconectar();
+    }
+
     public int insertarCategoria(String nombre) {
         int id = -1;
         conectar();
@@ -66,7 +92,6 @@ public class GestorBD {
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         desconectar();
-        cargarListaCat();
         return id;
     }
 
@@ -108,33 +133,7 @@ public class GestorBD {
 
     }
 
-    public void cargarListaCat() {
-        conectar();
-        // Llamada a procedimiento almacenado
-        // Creamos el statement
-        String sql = "{ call selects.select_categorias(?) }";
-        try {
-            vprincipal.getCategorias().removeAll(vprincipal.getCategorias());
-            CallableStatement cs = conn.prepareCall(sql);
-            cs.registerOutParameter(1, OracleTypes.CURSOR);
-            cs.execute();
-            try (ResultSet rs = (ResultSet) cs.getObject(1)) {
-                while (rs.next()) {
-                    Categoria c = new Categoria();
-                    c.setId(rs.getInt(1));
-                    c.setNombre(rs.getString(2));
-                    vprincipal.getCategorias().add(c);
-                }
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        desconectar();
-    }
-
-    public void cargarListaPr(Categoria c) {
+    public void cargarListaPr(Categoria c) {  //llamo en el constructor de vprincipal
         conectar();
         // Llamada a procedimiento almacenado
         // Creamos el statement
@@ -153,36 +152,6 @@ public class GestorBD {
                     p.setTexto_pr(rs.getString(2));
                     p.setId_cat_pr(rs.getInt(3));
                     prs.add(p);
-                }
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        desconectar();
-    }
-
-    public void cargarListaRp(Pregunta p) {
-        conectar();
-        // Llamada a procedimiento almacenado
-        // Creamos el statement
-        String sql = "{ call selects.select_respuestas(?,?) }";
-        try {
-            List<Respuesta> rps = p.getRespuestas();
-            rps.removeAll(rps);
-            CallableStatement cs = conn.prepareCall(sql);
-            cs.setInt(1, p.getId_pr());
-            cs.registerOutParameter(2, OracleTypes.CURSOR);
-            cs.execute();
-            try (ResultSet rs = (ResultSet) cs.getObject(2)) {
-                while (rs.next()) {
-                    Respuesta r = new Respuesta();
-                    r.setId_resp(rs.getInt(1));
-                    r.setTexto_rp(rs.getString(2));
-                    r.setValor(rs.getInt(3));
-                    r.setId_pr_rp(rs.getInt(4));
-                    rps.add(r);
                 }
             }
 
@@ -215,6 +184,36 @@ public class GestorBD {
         return id;
     }
 
+    public void cargarListaRp(Pregunta p) {   //llamo en el constructor de vprincipal
+        conectar();
+        // Llamada a procedimiento almacenado
+        // Creamos el statement
+        String sql = "{ call selects.select_respuestas(?,?) }";
+        try {
+            List<Respuesta> rps = p.getRespuestas();
+            rps.removeAll(rps);
+            CallableStatement cs = conn.prepareCall(sql);
+            cs.setInt(1, p.getId_pr());
+            cs.registerOutParameter(2, OracleTypes.CURSOR);
+            cs.execute();
+            try (ResultSet rs = (ResultSet) cs.getObject(2)) {
+                while (rs.next()) {
+                    Respuesta r = new Respuesta();
+                    r.setId_resp(rs.getInt(1));
+                    r.setTexto_rp(rs.getString(2));
+                    r.setValor(rs.getInt(3));
+                    r.setId_pr_rp(rs.getInt(4));
+                    rps.add(r);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        desconectar();
+    }
+
     public int insertarRespuesta(String texto, int valor, int id_pr) {
         int id = -1;
         conectar();
@@ -237,8 +236,6 @@ public class GestorBD {
         desconectar();
         return id;
     }
-
-   
 
     /**
      * @param vprincipal the vprincipal to set

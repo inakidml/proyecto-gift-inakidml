@@ -25,12 +25,14 @@ public class VEditarCat extends javax.swing.JFrame {
     }
 
     public void rellenarCombo() {
+        limpiar();
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();//Rellenar JComboBox
         for (Categoria cat : vprincipal.getCategorias()) {
             modelo.addElement(cat.getNombre());
         }
 
         jComboBox1.setModel(modelo);
+        
     }
 
     /**
@@ -49,6 +51,7 @@ public class VEditarCat extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,6 +118,8 @@ public class VEditarCat extends javax.swing.JFrame {
 
         jButton2.setText("Aceptar");
 
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,7 +130,8 @@ public class VEditarCat extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)))
                 .addContainerGap())
         );
@@ -137,7 +143,9 @@ public class VEditarCat extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -145,19 +153,33 @@ public class VEditarCat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String nombre = (String)jComboBox1.getSelectedItem();
+        String nombre = (String) jComboBox1.getSelectedItem();
         bd.borrarCat(nombre);
         rellenarCombo();
- 
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String oldNombre = (String)jComboBox1.getSelectedItem();
-        String newNombre = (String)jTextField1.getText();
-        bd.editarCat(oldNombre, newNombre);
-        rellenarCombo();
+        Categoria c = new Categoria();
+        String oldNombre = (String) jComboBox1.getSelectedItem();
+        String newNombre = (String) jTextField1.getText();
+        c.setNombre(newNombre);
+        if (!vprincipal.getCategorias().contains(c)) {
+            bd.editarCat(oldNombre, newNombre);
+            rellenarCombo();
+            
+        } else {
+
+            jLabel1.setText("¡Ya existe una categoría con ese nombre!");
+        }
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
+    public void limpiar() {
+        jLabel1.setText("");
+        jTextField1.setText("");
+
+    }
 
     /**
      * @param args the command line arguments
@@ -199,6 +221,7 @@ public class VEditarCat extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;

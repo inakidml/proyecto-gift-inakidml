@@ -18,8 +18,9 @@ public class Vprincipal extends javax.swing.JFrame {
     private VNuevaCategoria vnuevacategoria = null;
     private VEditarCat veditarcat = null;
     private VVerPr vverpr=null;
-    private List<Categoria> categorias = new ArrayList<>();
-    private GestorBD bd = new GestorBD();
+    private VExportar vexportar=null;
+    private final List<Categoria> categorias = new ArrayList<>();
+    private final GestorBD bd = new GestorBD();
 
     /**
      * Creates new form Vprincipal
@@ -158,6 +159,11 @@ public class Vprincipal extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Exportar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         jButton7.setText("Let'sGo");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -256,6 +262,17 @@ public class Vprincipal extends javax.swing.JFrame {
         vverpr.setVisible(true);
         vverpr.rellenarCombo();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        if (vexportar==null) {
+            vexportar=new VExportar();
+            vexportar.setCategorias(categorias);
+            vexportar.setVprincipal(this);
+            vexportar.setBd(bd);
+           }
+        vexportar.setVisible(true);
+        
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
