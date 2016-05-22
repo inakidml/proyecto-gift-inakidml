@@ -20,6 +20,11 @@ public class Pregunta {
     private Categoria categoria;
 
     @Override
+    public String toString() {
+        return "Pregunta{" + "id_pr=" + id_pr + ", texto_pr=" + texto_pr + ", id_cat_pr=" + id_cat_pr + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 67 * hash + this.id_pr;

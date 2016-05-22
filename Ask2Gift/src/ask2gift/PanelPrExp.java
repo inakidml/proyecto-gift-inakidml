@@ -5,7 +5,9 @@
  */
 package ask2gift;
 
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -16,6 +18,8 @@ public class PanelPrExp extends javax.swing.JPanel {
 
     private VExportar v = null;
     private List<Categoria> categorias;
+    Map<String, Pregunta> preguntas;
+    private PanelCatExp panelcatexp = null;
 
     /**
      * Creates new form PanelCatExp
@@ -30,26 +34,41 @@ public class PanelPrExp extends javax.swing.JPanel {
     public void rellenarTodas() {
 
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();//Rellenar JComboBox
+        preguntas = new Hashtable<>();
         for (Categoria cat : categorias) {
             for (Pregunta pregunta : cat.getPreguntas()) {
                 modelo.addElement(pregunta.getId_pr());
+                System.out.println("" + pregunta.getId_pr());
+                preguntas.put(("" + pregunta.getId_pr()), pregunta);
+
             }
 
         }
 
         jComboBox1.setModel(modelo);
+        rellenarAreaPr();
 
+    }
+
+    public Pregunta getPreguntaCombo() {
+        Pregunta p = preguntas.get("" + jComboBox1.getSelectedItem());
+        String texto = p.getTexto_pr();
+        return p;
     }
 
     public void rellenarUna(Categoria cat) {
 
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();//Rellenar JComboBox
+        preguntas = new Hashtable<>();
         for (Pregunta pregunta : cat.getPreguntas()) {
             modelo.addElement(pregunta.getId_pr());
+
+            preguntas.put(("" + pregunta.getId_pr()), pregunta);
+
         }
 
         jComboBox1.setModel(modelo);
-
+        rellenarAreaPr();
     }
 
     /**
@@ -66,6 +85,11 @@ public class PanelPrExp extends javax.swing.JPanel {
         jTextArea1 = new javax.swing.JTextArea();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -95,10 +119,34 @@ public class PanelPrExp extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        rellenarAreaPr();
+
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+    public void rellenarAreaPr() {
+        Pregunta p = preguntas.get("" + jComboBox1.getSelectedItem());
+        String texto = p.getTexto_pr();
+
+        jTextArea1.setText(texto);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the panelcatexp
+     */
+    public PanelCatExp getPanelcatexp() {
+        return panelcatexp;
+    }
+
+    /**
+     * @param panelcatexp the panelcatexp to set
+     */
+    public void setPanelcatexp(PanelCatExp panelcatexp) {
+        this.panelcatexp = panelcatexp;
+    }
 }

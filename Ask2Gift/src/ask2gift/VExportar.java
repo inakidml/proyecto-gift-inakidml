@@ -19,6 +19,7 @@ public class VExportar extends javax.swing.JFrame {
     private List<Categoria> categorias = null;
     private PanelCatExp panelcatexp;
     private PanelPrExp panelprexp;
+    private VFileChooser vfilechooser=null;
     private boolean panelCatMostrado = false;
     private boolean panelPrMostrado = false;
     private String cadena = "";
@@ -153,6 +154,11 @@ public class VExportar extends javax.swing.JFrame {
         });
 
         jButton2.setText("Exportar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Volver");
 
@@ -184,7 +190,7 @@ public class VExportar extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -200,13 +206,23 @@ public class VExportar extends javax.swing.JFrame {
             jPanel3.setLayout(new BoxLayout(jPanel3, BoxLayout.X_AXIS));
             panelcatexp = new PanelCatExp(this, categorias);
             jPanel3.add(panelcatexp);
+            if (panelprexp != null) {
+                panelcatexp.setPanelprexp(panelprexp);
+                panelprexp.rellenarUna(panelcatexp.getCategoriaSelec());
+            }
+
             pack();
             panelCatMostrado = true;
+
         } else {
             jPanel3.setLayout(new BoxLayout(jPanel3, BoxLayout.X_AXIS));
             jPanel3.remove(panelcatexp);
             pack();
             panelCatMostrado = false;
+            if (panelprexp != null) {
+                panelcatexp.setPanelprexp(panelprexp);
+                panelprexp.rellenarTodas();
+            }
         }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
@@ -219,15 +235,15 @@ public class VExportar extends javax.swing.JFrame {
             panelPrMostrado = true;
             if (jCheckBox1.isSelected()) {
                 panelprexp.rellenarTodas();
-            }else{
-            panelprexp.rellenarUna(panelcatexp.getCategoriaSelec());
+            } else {
+                panelprexp.rellenarUna(panelcatexp.getCategoriaSelec());
             }
         } else {
             jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
             jPanel4.remove(panelprexp);
             panelPrMostrado = false;
             pack();
-            
+
         }
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
@@ -235,48 +251,76 @@ public class VExportar extends javax.swing.JFrame {
         if (jCheckBox1.isSelected() && jCheckBox2.isSelected()) {
             for (Categoria categoria : categorias) {
                 for (Pregunta pregunta : categoria.getPreguntas()) {
-                    cadena += pregunta.getTexto_pr();
-                    cadena += "\n";
-                    cadena += "{";
-                    cadena += "\n";
+                    setCadena(getCadena() + pregunta.getTexto_pr());
+                    setCadena(getCadena() + "\n");
+                    setCadena(getCadena() + "{");
+                    setCadena(getCadena() + "\n");
                     for (Respuesta respuesta : pregunta.getRespuestas()) {
                         if (respuesta.getValor() == 1) {
-                            cadena += "=";
+                            setCadena(getCadena() + "=");
                         } else {
-                            cadena += "~";
+                            setCadena(getCadena() + "~");
                         }
-                        cadena += respuesta.getTexto_rp();
-                        cadena += "\n";
+                        setCadena(getCadena() + respuesta.getTexto_rp());
+                        setCadena(getCadena() + "\n");
                     }
-                    cadena += "}";
-                    cadena += "\n";
-                    cadena += "\n";
+                    setCadena(getCadena() + "}");
+                    setCadena(getCadena() + "\n");
+                    setCadena(getCadena() + "\n");
                 }
             }
         } else if (!jCheckBox1.isSelected() && jCheckBox2.isSelected()) {
-            Categoria categoria=panelcatexp.getCategoriaSelec();
+            Categoria categoria = panelcatexp.getCategoriaSelec();
             for (Pregunta pregunta : categoria.getPreguntas()) {
-                cadena += pregunta.getTexto_pr();
-                cadena += "\n";
-                cadena += "{";
-                cadena += "\n";
+                setCadena(getCadena() + pregunta.getTexto_pr());
+                setCadena(getCadena() + "\n");
+                setCadena(getCadena() + "{");
+                setCadena(getCadena() + "\n");
                 for (Respuesta respuesta : pregunta.getRespuestas()) {
                     if (respuesta.getValor() == 1) {
-                        cadena += "=";
+                        setCadena(getCadena() + "=");
                     } else {
-                        cadena += "~";
+                        setCadena(getCadena() + "~");
                     }
-                    cadena += respuesta.getTexto_rp();
-                    cadena += "\n";
+                    setCadena(getCadena() + respuesta.getTexto_rp());
+                    setCadena(getCadena() + "\n");
                 }
-                cadena += "}";
-                cadena += "\n";
-                cadena += "\n";
+                setCadena(getCadena() + "}");
+                setCadena(getCadena() + "\n");
+                setCadena(getCadena() + "\n");
             }
+        } else if (!jCheckBox1.isSelected() || jCheckBox1.isSelected() && !jCheckBox2.isSelected()) {
+            Pregunta p = panelprexp.getPreguntaCombo();
+            setCadena(getCadena() + p.getTexto_pr());
+            setCadena(getCadena() + "\n");
+            setCadena(getCadena() + "{");
+            setCadena(getCadena() + "\n");
+            for (Respuesta respuesta : p.getRespuestas()) {
+                if (respuesta.getValor() == 1) {
+                    setCadena(getCadena() + "=");
+                } else {
+                    setCadena(getCadena() + "~");
+                }
+                setCadena(getCadena() + respuesta.getTexto_rp());
+                setCadena(getCadena() + "\n");
+            }
+            setCadena(getCadena() + "}");
+            setCadena(getCadena() + "\n");
+            setCadena(getCadena() + "\n");
+
         }
-        jTextArea1.setText(cadena);
+        jTextArea1.setText(getCadena());
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (vfilechooser==null) {
+            setVfilechooser(new VFileChooser(getCadena()));
+           
+            
+        }
+         vfilechooser.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -346,5 +390,26 @@ public class VExportar extends javax.swing.JFrame {
      */
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    /**
+     * @param vfilechooser the vfilechooser to set
+     */
+    public void setVfilechooser(VFileChooser vfilechooser) {
+        this.vfilechooser = vfilechooser;
+    }
+
+    /**
+     * @return the cadena
+     */
+    public String getCadena() {
+        return cadena;
+    }
+
+    /**
+     * @param cadena the cadena to set
+     */
+    public void setCadena(String cadena) {
+        this.cadena = cadena;
     }
 }
