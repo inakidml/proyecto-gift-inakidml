@@ -320,6 +320,7 @@ public class VExportar extends javax.swing.JFrame {
             
         }
          vfilechooser.setVisible(true);
+         vfilechooser=null;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

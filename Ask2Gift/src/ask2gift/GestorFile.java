@@ -23,12 +23,12 @@ public class GestorFile {
             f0 = new FileOutputStream(filePath);
 
             // Escritura de f1
-            for (int i = 0; i < buffer.length; i += 2) {
+            for (int i = 0; i < buffer.length; i ++) {
                 f0.write(buffer[i]);
             }
 
-            // Escritura de f2
-            //  f0.write(buffer);
+           
+          
         } catch (IOException e) {
             System.out.println("ERROR: Error de E/S");
         } finally {

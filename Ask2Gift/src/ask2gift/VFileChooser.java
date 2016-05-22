@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -25,8 +26,8 @@ public class VFileChooser extends javax.swing.JFrame {
      */
     public VFileChooser(String cadena) {
         initComponents();
-        this.cadena=cadena;
-        
+        this.cadena = cadena;
+
     }
 
     /**
@@ -62,7 +63,7 @@ public class VFileChooser extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -70,16 +71,25 @@ public class VFileChooser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        try {
-            File f = jFileChooser1.getSelectedFile();
+        int aceptar=0;
+        //System.out.println(""+JFileChooser.APPROVE_OPTION);
+        if (aceptar==JFileChooser.APPROVE_OPTION) {
+            try {
+                File f = jFileChooser1.getSelectedFile();
+                gestorfile = new GestorFile(cadena, f.getCanonicalPath());
+            } catch (IOException ex) {
+                System.out.println("ERROR i/o");
+                
+                
+            }
             
-            gestorfile=new GestorFile(f.getCanonicalPath(), cadena);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(VFileChooser.class.getName()).log(Level.SEVERE, null, ex);
         }
+            this.setVisible(false);
+           
+            
+
         
-        
+        gestorfile=null;
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     /**
