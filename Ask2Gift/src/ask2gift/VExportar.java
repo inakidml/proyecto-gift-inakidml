@@ -5,8 +5,11 @@
  */
 package ask2gift;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.BoxLayout;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -19,9 +22,9 @@ public class VExportar extends javax.swing.JFrame {
     private List<Categoria> categorias = null;
     private PanelCatExp panelcatexp;
     private PanelPrExp panelprexp;
-    private VFileChooser vfilechooser=null;
+    private GestorFile gestorfile = null;
     private boolean panelCatMostrado = false;
-    private boolean panelPrMostrado = false;
+
     private String cadena = "";
 
     /**
@@ -202,23 +205,23 @@ public class VExportar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        if (!jCheckBox1.isSelected() && !panelCatMostrado) {
+        if (!jCheckBox1.isSelected()) {
             jPanel3.setLayout(new BoxLayout(jPanel3, BoxLayout.X_AXIS));
             panelcatexp = new PanelCatExp(this, categorias);
             jPanel3.add(panelcatexp);
+
             if (panelprexp != null) {
                 panelcatexp.setPanelprexp(panelprexp);
                 panelprexp.rellenarUna(panelcatexp.getCategoriaSelec());
             }
 
             pack();
-            panelCatMostrado = true;
 
         } else {
             jPanel3.setLayout(new BoxLayout(jPanel3, BoxLayout.X_AXIS));
             jPanel3.remove(panelcatexp);
             pack();
-            panelCatMostrado = false;
+
             if (panelprexp != null) {
                 panelcatexp.setPanelprexp(panelprexp);
                 panelprexp.rellenarTodas();
@@ -227,21 +230,23 @@ public class VExportar extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        if (!jCheckBox2.isSelected() && !panelPrMostrado) {
+        if (!jCheckBox2.isSelected()) {
             jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
             panelprexp = new PanelPrExp(this, categorias);
             jPanel4.add(panelprexp);
             pack();
-            panelPrMostrado = true;
+
             if (jCheckBox1.isSelected()) {
                 panelprexp.rellenarTodas();
             } else {
+                panelcatexp.setPanelprexp(panelprexp);
                 panelprexp.rellenarUna(panelcatexp.getCategoriaSelec());
+                System.out.println(panelprexp);
             }
         } else {
             jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
             jPanel4.remove(panelprexp);
-            panelPrMostrado = false;
+
             pack();
 
         }
@@ -314,13 +319,27 @@ public class VExportar extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (vfilechooser==null) {
+        /*if (vfilechooser==null) {
             setVfilechooser(new VFileChooser(getCadena()));
-           
-            
+        
         }
          vfilechooser.setVisible(true);
          vfilechooser=null;
+         */
+        JFileChooser fc = new JFileChooser();
+        int returnVal = fc.showSaveDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                File f = fc.getSelectedFile();
+                gestorfile = new GestorFile(cadena, f.getCanonicalPath());
+            } catch (IOException ex) {
+                System.out.println("ERROR i/o");
+
+            }
+
+        }
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -391,13 +410,6 @@ public class VExportar extends javax.swing.JFrame {
      */
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
-    }
-
-    /**
-     * @param vfilechooser the vfilechooser to set
-     */
-    public void setVfilechooser(VFileChooser vfilechooser) {
-        this.vfilechooser = vfilechooser;
     }
 
     /**

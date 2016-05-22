@@ -80,15 +80,20 @@ public class PanelCatExp extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+
         selecCategoria();
-        panelprexp.rellenarUna(getCategoriaSelec());
-        panelprexp.rellenarAreaPr();
+        if (panelprexp != null) {
+            panelprexp.rellenarUna(getCategoriaSelec());
+            panelprexp.rellenarAreaPr();
+        }
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
     private void selecCategoria() {
 
         categoriaSelec = new Categoria();
         getCategoriaSelec().setNombre((String) jComboBox1.getSelectedItem());
         categoriaSelec = categorias.get(categorias.indexOf(getCategoriaSelec()));
+        //System.out.println(categoriaSelec);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

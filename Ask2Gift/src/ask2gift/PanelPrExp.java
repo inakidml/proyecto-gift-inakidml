@@ -31,6 +31,12 @@ public class PanelPrExp extends javax.swing.JPanel {
 
     }
 
+    public Pregunta getPreguntaCombo() {
+        Pregunta p = preguntas.get("" + jComboBox1.getSelectedItem());
+        String texto = p.getTexto_pr();
+        return p;
+    }
+
     public void rellenarTodas() {
 
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();//Rellenar JComboBox
@@ -38,7 +44,7 @@ public class PanelPrExp extends javax.swing.JPanel {
         for (Categoria cat : categorias) {
             for (Pregunta pregunta : cat.getPreguntas()) {
                 modelo.addElement(pregunta.getId_pr());
-                System.out.println("" + pregunta.getId_pr());
+                //System.out.println("" + pregunta.getId_pr());
                 preguntas.put(("" + pregunta.getId_pr()), pregunta);
 
             }
@@ -50,12 +56,6 @@ public class PanelPrExp extends javax.swing.JPanel {
 
     }
 
-    public Pregunta getPreguntaCombo() {
-        Pregunta p = preguntas.get("" + jComboBox1.getSelectedItem());
-        String texto = p.getTexto_pr();
-        return p;
-    }
-
     public void rellenarUna(Categoria cat) {
 
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();//Rellenar JComboBox
@@ -64,10 +64,11 @@ public class PanelPrExp extends javax.swing.JPanel {
             modelo.addElement(pregunta.getId_pr());
 
             preguntas.put(("" + pregunta.getId_pr()), pregunta);
-
+            //System.out.println(pregunta);
         }
 
         jComboBox1.setModel(modelo);
+
         rellenarAreaPr();
     }
 
