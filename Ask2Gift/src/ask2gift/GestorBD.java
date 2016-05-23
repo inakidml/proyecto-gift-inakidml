@@ -214,6 +214,24 @@ public class GestorBD {
         desconectar();
     }
 
+    public void borrarPr(Pregunta p) {
+        conectar();
+        // Llamada a procedimiento almacenado
+        // Creamos el statement
+        String sql = "{ call deletes.delete_pregunta(?) }";
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            // Cargamos los parametros de entrada IN
+            cs.setInt(1, p.getId_pr());//como primer valor, mando el id de la pr
+            cs.execute();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        desconectar();
+
+    }
+
     public int insertarRespuesta(String texto, int valor, int id_pr) {
         int id = -1;
         conectar();
@@ -230,8 +248,10 @@ public class GestorBD {
             cs.execute();
             id = cs.getInt(4);//paso a una variable el integer
             //System.out.println(id + " " + nombre);
+
         } catch (SQLException ex) {
-            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestorBD.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         desconectar();
         return id;

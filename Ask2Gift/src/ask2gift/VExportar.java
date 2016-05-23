@@ -319,13 +319,7 @@ public class VExportar extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        /*if (vfilechooser==null) {
-            setVfilechooser(new VFileChooser(getCadena()));
-        
-        }
-         vfilechooser.setVisible(true);
-         vfilechooser=null;
-         */
+       
         JFileChooser fc = new JFileChooser();
         int returnVal = fc.showSaveDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {

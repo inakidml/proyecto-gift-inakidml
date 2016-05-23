@@ -237,7 +237,7 @@ public class VNuevaPregunta extends javax.swing.JFrame {
     }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         anadirPanelResp();
-        if (panelesR.size() >= 8) {
+        if (panelesR.size() >5) {
             jButton2.setVisible(false);
         }
     }//GEN-LAST:event_jButton2ActionPerformed

@@ -17,8 +17,10 @@ public class Vprincipal extends javax.swing.JFrame {
     private VNuevaPregunta vnuevapregunta = null;
     private VNuevaCategoria vnuevacategoria = null;
     private VEditarCat veditarcat = null;
-    private VVerPr vverpr=null;
-    private VExportar vexportar=null;
+    private VVerPr vverpr = null;
+    private VExportar vexportar = null;
+    private VBorrPr vborrpr = null;
+    private VEditarPr veditarpr=null;
     private final List<Categoria> categorias = new ArrayList<>();
     private final GestorBD bd = new GestorBD();
 
@@ -29,7 +31,7 @@ public class Vprincipal extends javax.swing.JFrame {
         initComponents();
         bd.setVprincipal(this);
         bd.cargarListaCat();
-        if (categorias.size()>0) {
+        if (categorias.size() > 0) {
             for (Categoria categoria : categorias) {
                 bd.cargarListaPr(categoria);
                 for (Pregunta pregunta : categoria.getPreguntas()) {
@@ -77,8 +79,18 @@ public class Vprincipal extends javax.swing.JFrame {
         });
 
         jButton2.setText("Editar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Borrar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Ver");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -222,7 +234,7 @@ public class Vprincipal extends javax.swing.JFrame {
             vnuevapregunta = new VNuevaPregunta();
             vnuevapregunta.setVprincipal(this);
             vnuevapregunta.setBd(bd);
-            
+
         }
         vnuevapregunta.limpiar();
         getVnuevapregunta().setVisible(true);
@@ -253,7 +265,7 @@ public class Vprincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       if (vverpr == null) {
+        if (vverpr == null) {
             vverpr = new VVerPr();
             vverpr.setVprincipal(this);
             vverpr.setBd(bd);
@@ -264,15 +276,39 @@ public class Vprincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if (vexportar==null) {
-            vexportar=new VExportar();
+        if (vexportar == null) {
+            vexportar = new VExportar();
             vexportar.setCategorias(categorias);
             vexportar.setVprincipal(this);
             vexportar.setBd(bd);
-           }
+        }
         vexportar.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (vborrpr == null) {
+            vborrpr = new VBorrPr();
+            vborrpr.setCategorias(categorias);
+            vborrpr.setVprincipal(this);
+            vborrpr.setGestorbd(bd);
+            vborrpr.rellenarComboCat();
+            
+        }
+        vborrpr.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    if (veditarpr == null) {
+            veditarpr = new VEditarPr();
+            veditarpr.setCategorias(categorias);
+            veditarpr.setVprincipal(this);
+            veditarpr.setBd(bd);
+            veditarpr.rellenarComboCat();
+            
+        }
+        veditarpr.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
