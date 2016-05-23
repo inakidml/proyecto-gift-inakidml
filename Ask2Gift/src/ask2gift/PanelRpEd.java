@@ -12,6 +12,7 @@ package ask2gift;
 public class PanelRpEd extends javax.swing.JPanel {
 
     private VEditarPr vpregunta = null;
+    private Respuesta respuesta=null;
 
     /**
      * Creates new form PanelRespuesta
@@ -130,4 +131,18 @@ public class PanelRpEd extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the respuesta
+     */
+    public Respuesta getRespuesta() {
+        return respuesta;
+    }
+
+    /**
+     * @param respuesta the respuesta to set
+     */
+    public void setRespuesta(Respuesta respuesta) {
+        this.respuesta = respuesta;
+    }
 }

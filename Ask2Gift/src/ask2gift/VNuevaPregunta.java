@@ -224,7 +224,7 @@ public class VNuevaPregunta extends javax.swing.JFrame {
         jTextArea1.setText("");
         panelesR.removeAll(panelesR);
         anadirPanelResp();
-
+        jLabel1.setText("");
     }
 
     public void anadirPanelResp() {
@@ -237,7 +237,7 @@ public class VNuevaPregunta extends javax.swing.JFrame {
     }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         anadirPanelResp();
-        if (panelesR.size() >5) {
+        if (panelesR.size() > 5) {
             jButton2.setVisible(false);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -251,14 +251,14 @@ public class VNuevaPregunta extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (!jTextArea1.equals("")) {
+        if (!jTextArea1.equals("") && verdadera != null) {
             Categoria c = new Categoria();
             Pregunta p = new Pregunta();
             String texto = jTextArea1.getText();
             String nomCat = (String) jComboBox1.getSelectedItem();
             c.setNombre(nomCat);
             int indexCat = vprincipal.getCategorias().indexOf(c);
-            c=vprincipal.getCategorias().get(indexCat);
+            c = vprincipal.getCategorias().get(indexCat);
             int id_pr = bd.insertarPregunta(texto, nomCat);
             p.setTexto_pr(texto);
             p.setId_cat_pr(c.getId());
@@ -286,6 +286,8 @@ public class VNuevaPregunta extends javax.swing.JFrame {
                 p.getRespuestas().add(r);
             }
             limpiar();
+        }else{
+        jLabel1.setText("Rellena bien los campos, acuerdate de marcar una como verdadera");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
     public void pulsadaCheck(PanelRespuesta r) {

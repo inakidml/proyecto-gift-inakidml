@@ -241,7 +241,7 @@ public class VExportar extends javax.swing.JFrame {
             } else {
                 panelcatexp.setPanelprexp(panelprexp);
                 panelprexp.rellenarUna(panelcatexp.getCategoriaSelec());
-                System.out.println(panelprexp);
+
             }
         } else {
             jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
@@ -319,7 +319,7 @@ public class VExportar extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
+
         JFileChooser fc = new JFileChooser();
         int returnVal = fc.showSaveDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {

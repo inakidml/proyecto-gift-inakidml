@@ -46,6 +46,7 @@ public class VEditarPr extends javax.swing.JFrame {
         jComboBox1.setModel(modelo);
         selecCategoria();
         panelpred.rellenarComboPr(getCategoriaSelec());
+        preguntaSelec(panelpred.getPreguntaCombo());
     }
 
     private void selecCategoria() {
@@ -66,10 +67,6 @@ public class VEditarPr extends javax.swing.JFrame {
         }
     }
 
-    public void anadirPanelResp() {
-
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,6 +80,8 @@ public class VEditarPr extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,6 +124,8 @@ public class VEditarPr extends javax.swing.JFrame {
             .addGap(0, 90, Short.MAX_VALUE)
         );
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Respuestas"));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -133,8 +134,17 @@ public class VEditarPr extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 325, Short.MAX_VALUE)
+            .addGap(0, 185, Short.MAX_VALUE)
         );
+
+        jButton1.setText("Editar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Volver");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,7 +155,12 @@ public class VEditarPr extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -156,7 +171,11 @@ public class VEditarPr extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -166,30 +185,54 @@ public class VEditarPr extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         selecCategoria();
         panelpred.rellenarComboPr(categoriaSelec);
-        preguntaSelec(p);
+        preguntaSelec(panelpred.getPreguntaCombo());
     }//GEN-LAST:event_jComboBox1ActionPerformed
-    public void preguntaSelec(Pregunta p) {
-        limpiar();
-        this.p = p;
-        respuestas = p.getRespuestas();
-        for (Respuesta respuesta : respuestas) {
-            jPanel3.setLayout(new BoxLayout(jPanel3, BoxLayout.Y_AXIS));
-            PanelRpEd nuevo = new PanelRpEd(this);
-            panelesR.add(nuevo);
-            jPanel3.add(nuevo);
-            pack();
-            nuevo.rellenarJTextRp(respuesta.getTexto_rp());
-            if (respuesta.getValor() > 0) {
-                nuevo.cambiarCheck(true);
-            } else {
-                nuevo.cambiarCheck(false);
-            }
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (respuestas != null && p != null) {
+            p.setTexto_pr(panelpred.getTextoEdit());
+            bd.modificarPr(p);
+            for (PanelRpEd panelR : panelesR) {
+                Respuesta r = panelR.getRespuesta();
+                r.setTexto_rp(panelR.devRespuesta());
+                if (panelR.equals(verdadera)) {
+                    //System.out.println(panelR);
+                    //System.out.println("Es verdadera");
+                    r.setValor(1);
+                } else {
+                    r.setValor(0);
+                }
+                bd.modificarRP(r);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+    public void preguntaSelec(Pregunta p) {
+        limpiarPaneles();
+        this.p = p;
+        if (p != null) {
+            respuestas = p.getRespuestas();
+            for (Respuesta respuesta : respuestas) {
+                jPanel3.setLayout(new BoxLayout(jPanel3, BoxLayout.Y_AXIS));
+                PanelRpEd nuevo = new PanelRpEd(this);
+                panelesR.add(nuevo);
+                jPanel3.add(nuevo);
+                pack();
+                nuevo.rellenarJTextRp(respuesta.getTexto_rp());
+                nuevo.setRespuesta(respuesta);
+                if (respuesta.getValor() > 0) {
+
+                    nuevo.cambiarCheck(true);
+                    verdadera = nuevo;
+                } else {
+                    nuevo.cambiarCheck(false);
+                }
+
+            }
         }
     }
 
-    public void limpiar() {
-        rellenarComboCat();
+    public void limpiarPaneles() {
+
         for (PanelRpEd panel : panelesR) {
             jPanel3.remove(panel);
         }
@@ -234,6 +277,8 @@ public class VEditarPr extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

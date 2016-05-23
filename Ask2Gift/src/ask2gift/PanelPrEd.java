@@ -33,11 +33,11 @@ public class PanelPrEd extends javax.swing.JPanel {
 
     public Pregunta getPreguntaCombo() {
         Pregunta p = preguntas.get("" + jComboBox1.getSelectedItem());
-        String texto = p.getTexto_pr();
+        if (p != null) {
+            String texto = p.getTexto_pr();
+        }
         return p;
     }
-
-    
 
     public void rellenarComboPr(Categoria cat) {
 
@@ -53,6 +53,10 @@ public class PanelPrEd extends javax.swing.JPanel {
         jComboBox1.setModel(modelo);
 
         rellenarAreaPr();
+    }
+
+    public String getTextoEdit() {
+        return jTextArea1.getText();
     }
 
     /**
@@ -112,9 +116,9 @@ public class PanelPrEd extends javax.swing.JPanel {
             String texto = p.getTexto_pr();
 
             jTextArea1.setText(texto);
-        }else{
-        jTextArea1.setText("");
-        
+        } else {
+            jTextArea1.setText("");
+
         }
 
     }

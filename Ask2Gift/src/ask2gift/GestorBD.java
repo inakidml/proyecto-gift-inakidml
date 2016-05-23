@@ -232,6 +232,45 @@ public class GestorBD {
 
     }
 
+    public void modificarPr(Pregunta p) {
+conectar();
+        // Llamada a procedimiento almacenado
+        // Creamos el statement
+        String sql = "{ call UPDATES.UPDATE_PREGUNTA(?,?,?) }";
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            // Cargamos los parametros de entrada IN
+            cs.setInt(1, p.getId_pr());
+            cs.setString(2, p.getTexto_pr());
+            cs.setInt(3, p.getId_cat_pr()); 
+            cs.execute();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        desconectar();
+    }
+
+    public void modificarRP(Respuesta r) {
+        
+        conectar();
+        // Llamada a procedimiento almacenado
+        // Creamos el statement
+        String sql = "{ call UPDATES.UPDATE_RESPUESTA(?,?,?) }";
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            // Cargamos los parametros de entrada IN
+            cs.setInt(1, r.getId_resp());
+            cs.setString(2, r.getTexto_rp());
+            cs.setInt(3, r.getValor()); 
+            cs.execute();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        desconectar();
+    }
+
     public int insertarRespuesta(String texto, int valor, int id_pr) {
         int id = -1;
         conectar();
