@@ -67,6 +67,7 @@ public class PanelRespuesta extends javax.swing.JPanel {
         jScrollPane1.setAutoscrolls(true);
 
         jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(3);
         jScrollPane1.setViewportView(jTextArea1);
 

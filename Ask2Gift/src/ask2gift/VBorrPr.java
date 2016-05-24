@@ -68,6 +68,8 @@ public class VBorrPr extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
+        setResizable(false);
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoría"));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));

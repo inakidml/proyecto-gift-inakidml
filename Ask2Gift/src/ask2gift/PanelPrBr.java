@@ -78,6 +78,7 @@ public class PanelPrBr extends javax.swing.JPanel {
             }
         });
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);

@@ -43,6 +43,9 @@ public class VNuevaCategoria extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
+        setTitle("Nueva Categoría");
+        setResizable(false);
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nueva Categoría"));
 
         jButton1.setText("Añadir");
@@ -75,6 +78,7 @@ public class VNuevaCategoria extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Categorías"));
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);

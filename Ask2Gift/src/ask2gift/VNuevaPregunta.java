@@ -55,6 +55,7 @@ public class VNuevaPregunta extends javax.swing.JFrame {
         jButton1.setText("+");
 
         setTitle("Nueva Pregunta");
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Seleccione la Categoría"));
 
@@ -85,6 +86,7 @@ public class VNuevaPregunta extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Pregunta"));
 
         jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -250,7 +252,7 @@ public class VNuevaPregunta extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (!jTextArea1.equals("") && verdadera != null) {
+        if (!jTextArea1.equals("") && verdadera != null && jTextArea1.getText().length() < 200) {
             Categoria c = new Categoria();
             Pregunta p = new Pregunta();
             String texto = jTextArea1.getText();
@@ -271,22 +273,28 @@ public class VNuevaPregunta extends javax.swing.JFrame {
                 Respuesta r = new Respuesta();
                 int valor;
                 String texto_rp = panelR.devRespuesta();
-                r.setId_pr_rp(id_pr);
-                //System.out.println(id_pr + " =id_pr");
-                r.setTexto_rp(texto_rp);
-                r.setPregunta(p);
-                if (panelR.equals(verdadera)) {
-                    valor = 1;
+                if (texto_rp.length() < 200) {
+                    r.setId_pr_rp(id_pr);
+                    //System.out.println(id_pr + " =id_pr");
+                    r.setTexto_rp(texto_rp);
+                    r.setPregunta(p);
+                    if (panelR.equals(verdadera)) {
+                        valor = 1;
+                    } else {
+                        valor = 0;
+                    }
+                    r.setValor(valor);
+                    int id_rp = bd.insertarRespuesta(texto_rp, valor, id_pr);
+                    p.getRespuestas().add(r);
+                    limpiar();
                 } else {
-                    valor = 0;
+                    jLabel1.setText("Repuesta demasiado larga!");
                 }
-                r.setValor(valor);
-                int id_rp = bd.insertarRespuesta(texto_rp, valor, id_pr);
-                p.getRespuestas().add(r);
+                
             }
-            limpiar();
-        }else{
-        jLabel1.setText("Rellena bien los campos, acuerdate de marcar una como verdadera");
+
+        } else {
+            jLabel1.setText("Rellena bien los campos, acuerdate de marcar una como verdadera y que no supere los 200 caracteres");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
     public void pulsadaCheck(PanelRespuesta r) {

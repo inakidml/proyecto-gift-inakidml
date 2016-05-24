@@ -55,6 +55,7 @@ public class VExportar extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
+        setTitle("Exportar");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Categorías"));
@@ -143,6 +144,7 @@ public class VExportar extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
