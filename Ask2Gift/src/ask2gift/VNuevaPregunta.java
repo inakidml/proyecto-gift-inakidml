@@ -286,16 +286,16 @@ public class VNuevaPregunta extends javax.swing.JFrame {
                     r.setValor(valor);
                     int id_rp = bd.insertarRespuesta(texto_rp, valor, id_pr);
                     p.getRespuestas().add(r);
-                    limpiar();
+                    
                 } else {
                     jLabel1.setText("Repuesta demasiado larga!");
-                }
+               }
                 
             }
 
         } else {
             jLabel1.setText("Rellena bien los campos, acuerdate de marcar una como verdadera y que no supere los 200 caracteres");
-        }
+        }limpiar();
     }//GEN-LAST:event_jButton3ActionPerformed
     public void pulsadaCheck(PanelRespuesta r) {
         verdadera = r;//se ha seleccionado alguna respuesta como verdadera, guardamos ref de panel

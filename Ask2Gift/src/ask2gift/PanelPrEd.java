@@ -68,7 +68,7 @@ public class PanelPrEd extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
@@ -79,6 +79,7 @@ public class PanelPrEd extends javax.swing.JPanel {
         });
 
         jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -118,7 +119,7 @@ public class PanelPrEd extends javax.swing.JPanel {
             String texto = p.getTexto_pr();
 
             jTextArea1.setText(texto);
-            System.out.println("debería haberlo escrito");
+            
         } else {
             jTextArea1.setText("");
 

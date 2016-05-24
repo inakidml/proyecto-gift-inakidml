@@ -85,6 +85,7 @@ public class VEditarPr extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setTitle("Editar Pregunta y Respuestas");
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoría"));
 
@@ -200,14 +201,15 @@ public class VEditarPr extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (respuestas != null && p != null) {
+            jLabel1.setText("");
 
-            if (!panelpred.getTextoEdit().equals("")) {
+            if (!panelpred.getTextoEdit().equals("") && panelpred.getTextoEdit().length() < 200) {
                 p.setTexto_pr(panelpred.getTextoEdit());
                 bd.modificarPr(p);
                 for (PanelRpEd panelR : panelesR) {
                     Respuesta r = panelR.getRespuesta();
                     String textoRp = panelR.devRespuesta();
-                    if (!textoRp.equals("")) {
+                    if (!textoRp.equals("") && textoRp.length() < 200) {
                         r.setTexto_rp(panelR.devRespuesta());
                         if (panelR.equals(verdadera)) {
 
@@ -217,12 +219,12 @@ public class VEditarPr extends javax.swing.JFrame {
                         }
                         bd.modificarRP(r);
                     } else {
-                        jLabel1.setText("No puede estar el textto vacío");
+                        jLabel1.setText("El textArea no puede estar vacio ni superar los 200 carácteres");
                     }
 
                 }
             } else {
-                jLabel1.setText("No puede estar el textto vacío");
+                jLabel1.setText("El textArea no puede estar vacio ni superar los 200 carácteres");
 
             }
 
@@ -265,6 +267,7 @@ public class VEditarPr extends javax.swing.JFrame {
         }
 
         panelesR.removeAll(panelesR);
+        pack();
 
     }
 
