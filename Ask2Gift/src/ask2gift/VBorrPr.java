@@ -68,8 +68,6 @@ public class VBorrPr extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoría"));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -117,6 +115,11 @@ public class VBorrPr extends javax.swing.JFrame {
         });
 
         jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,13 +164,20 @@ public class VBorrPr extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Pregunta p = new Pregunta();
-        p=panelprbr.getPreguntaCombo();
-        categoriaSelec.getPreguntas().remove(p);
-        bd.borrarPr(p);
-        selecCategoria();
-        panelprbr.rellenarComboPr(categoriaSelec);
+        p = panelprbr.getPreguntaCombo();
+        if (p != null) {
+            categoriaSelec.getPreguntas().remove(p);
+            bd.borrarPr(p);
+            selecCategoria();
+            panelprbr.rellenarComboPr(categoriaSelec);
+        }
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

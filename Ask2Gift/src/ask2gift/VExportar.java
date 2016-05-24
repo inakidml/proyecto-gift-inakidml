@@ -55,7 +55,6 @@ public class VExportar extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Categorías"));
@@ -164,6 +163,11 @@ public class VExportar extends javax.swing.JFrame {
         });
 
         jButton3.setText("Volver");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -296,25 +300,29 @@ public class VExportar extends javax.swing.JFrame {
             }
         } else if (!jCheckBox1.isSelected() || jCheckBox1.isSelected() && !jCheckBox2.isSelected()) {
             Pregunta p = panelprexp.getPreguntaCombo();
-            setCadena(getCadena() + p.getTexto_pr());
-            setCadena(getCadena() + "\n");
-            setCadena(getCadena() + "{");
-            setCadena(getCadena() + "\n");
-            for (Respuesta respuesta : p.getRespuestas()) {
-                if (respuesta.getValor() == 1) {
-                    setCadena(getCadena() + "=");
-                } else {
-                    setCadena(getCadena() + "~");
-                }
-                setCadena(getCadena() + respuesta.getTexto_rp());
+            if (p != null) {
+                setCadena(getCadena() + p.getTexto_pr());
                 setCadena(getCadena() + "\n");
+                setCadena(getCadena() + "{");
+                setCadena(getCadena() + "\n");
+                for (Respuesta respuesta : p.getRespuestas()) {
+                    if (respuesta.getValor() == 1) {
+                        setCadena(getCadena() + "=");
+                    } else {
+                        setCadena(getCadena() + "~");
+                    }
+                    setCadena(getCadena() + respuesta.getTexto_rp());
+                    setCadena(getCadena() + "\n");
+                }
+                setCadena(getCadena() + "}");
+                setCadena(getCadena() + "\n");
+                setCadena(getCadena() + "\n");
+
             }
-            setCadena(getCadena() + "}");
-            setCadena(getCadena() + "\n");
-            setCadena(getCadena() + "\n");
 
         }
         jTextArea1.setText(getCadena());
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -335,6 +343,12 @@ public class VExportar extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        this.setVisible(false);
+        cadena = "";
+        jTextArea1.setText(cadena);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

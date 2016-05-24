@@ -111,11 +111,14 @@ public class PanelPrEd extends javax.swing.JPanel {
         v.preguntaSelec(getPreguntaCombo());
     }//GEN-LAST:event_jComboBox1ActionPerformed
     public void rellenarAreaPr() {
+       
         if (preguntas.size() > 0) {
             Pregunta p = preguntas.get("" + jComboBox1.getSelectedItem());
+          
             String texto = p.getTexto_pr();
 
             jTextArea1.setText(texto);
+            System.out.println("debería haberlo escrito");
         } else {
             jTextArea1.setText("");
 

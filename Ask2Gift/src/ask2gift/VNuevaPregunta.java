@@ -54,7 +54,6 @@ public class VNuevaPregunta extends javax.swing.JFrame {
 
         jButton1.setText("+");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nueva Pregunta");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Seleccione la Categoría"));
@@ -113,7 +112,7 @@ public class VNuevaPregunta extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Cancelar");
+        jButton4.setText("Volver");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);

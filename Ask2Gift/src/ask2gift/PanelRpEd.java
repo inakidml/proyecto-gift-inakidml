@@ -12,7 +12,7 @@ package ask2gift;
 public class PanelRpEd extends javax.swing.JPanel {
 
     private VEditarPr vpregunta = null;
-    private Respuesta respuesta=null;
+    private Respuesta respuesta = null;
 
     /**
      * Creates new form PanelRespuesta
@@ -119,9 +119,9 @@ public class PanelRpEd extends javax.swing.JPanel {
         jCheckBox1.setSelected(b);
 
     }
-    
-    public void rellenarJTextRp(String s){
-    jTextArea1.setText(s);
+
+    public void rellenarJTextRp(String s) {
+        jTextArea1.setText(s);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

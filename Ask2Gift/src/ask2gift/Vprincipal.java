@@ -7,6 +7,7 @@ package ask2gift;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Vprincipal extends javax.swing.JFrame {
     private VVerPr vverpr = null;
     private VExportar vexportar = null;
     private VBorrPr vborrpr = null;
-    private VEditarPr veditarpr=null;
+    private VEditarPr veditarpr = null;
     private final List<Categoria> categorias = new ArrayList<>();
     private final GestorBD bd = new GestorBD();
 
@@ -31,14 +32,6 @@ public class Vprincipal extends javax.swing.JFrame {
         initComponents();
         bd.setVprincipal(this);
         bd.cargarListaCat();
-        if (categorias.size() > 0) {
-            for (Categoria categoria : categorias) {
-                bd.cargarListaPr(categoria);
-                for (Pregunta pregunta : categoria.getPreguntas()) {
-                    bd.cargarListaRp(pregunta);
-                }
-            }
-        }
 
     }
 
@@ -230,14 +223,20 @@ public class Vprincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (getVnuevapregunta() == null) {
-            vnuevapregunta = new VNuevaPregunta();
-            vnuevapregunta.setVprincipal(this);
-            vnuevapregunta.setBd(bd);
 
+        if (categorias.size() > 0) {
+
+            if (getVnuevapregunta() == null) {
+                vnuevapregunta = new VNuevaPregunta();
+                vnuevapregunta.setVprincipal(this);
+                vnuevapregunta.setBd(bd);
+
+            }
+            vnuevapregunta.limpiar();
+            getVnuevapregunta().setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No Existe Ninguna Categoría!", "Error categoría", JOptionPane.ERROR_MESSAGE);
         }
-        vnuevapregunta.limpiar();
-        getVnuevapregunta().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -255,59 +254,80 @@ public class Vprincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if (veditarcat == null) {
-            veditarcat = new VEditarCat();
-            veditarcat.setVprincipal(this);
-            veditarcat.setBd(bd);
+        if (categorias.size() > 0) {
+            if (veditarcat == null) {
+                veditarcat = new VEditarCat();
+                veditarcat.setVprincipal(this);
+                veditarcat.setBd(bd);
+            }
+            veditarcat.setVisible(true);
+            veditarcat.rellenarCombo();
+        } else {
+            JOptionPane.showMessageDialog(this, "No Existe Ninguna Categoría!", "Error categoría", JOptionPane.ERROR_MESSAGE);
         }
-        veditarcat.setVisible(true);
-        veditarcat.rellenarCombo();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if (vverpr == null) {
-            vverpr = new VVerPr();
-            vverpr.setVprincipal(this);
-            vverpr.setBd(bd);
-            vverpr.setCategorias(categorias);
+
+        if (categorias.size() > 0) {
+            if (vverpr == null) {
+                vverpr = new VVerPr();
+                vverpr.setVprincipal(this);
+                vverpr.setBd(bd);
+                vverpr.setCategorias(categorias);
+            }
+            vverpr.setVisible(true);
+            vverpr.rellenarCombo();
+        } else {
+            JOptionPane.showMessageDialog(this, "No Existe Ninguna Categoría!", "Error categoría", JOptionPane.ERROR_MESSAGE);
         }
-        vverpr.setVisible(true);
-        vverpr.rellenarCombo();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if (vexportar == null) {
-            vexportar = new VExportar();
-            vexportar.setCategorias(categorias);
-            vexportar.setVprincipal(this);
-            vexportar.setBd(bd);
+        if (categorias.size() > 0) {
+            if (vexportar == null) {
+                vexportar = new VExportar();
+                vexportar.setCategorias(categorias);
+                vexportar.setVprincipal(this);
+                vexportar.setBd(bd);
+            }
+            vexportar.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No Existe Ninguna Categoría!", "Error categoría", JOptionPane.ERROR_MESSAGE);
         }
-        vexportar.setVisible(true);
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (vborrpr == null) {
-            vborrpr = new VBorrPr();
-            vborrpr.setCategorias(categorias);
-            vborrpr.setVprincipal(this);
-            vborrpr.setGestorbd(bd);
+        if (categorias.size() > 0) {
+            if (vborrpr == null) {
+                vborrpr = new VBorrPr();
+                vborrpr.setCategorias(categorias);
+                vborrpr.setVprincipal(this);
+                vborrpr.setGestorbd(bd);
+
+            }
+            vborrpr.setVisible(true);
             vborrpr.rellenarComboCat();
-            
+        } else {
+            JOptionPane.showMessageDialog(this, "No Existe Ninguna Categoría!", "Error categoría", JOptionPane.ERROR_MESSAGE);
         }
-        vborrpr.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    if (veditarpr == null) {
-            veditarpr = new VEditarPr();
-            veditarpr.setCategorias(categorias);
-            veditarpr.setVprincipal(this);
-            veditarpr.setBd(bd);
+        if (categorias.size() > 0) {
+            if (veditarpr == null) {
+                veditarpr = new VEditarPr();
+                veditarpr.setCategorias(categorias);
+                veditarpr.setVprincipal(this);
+                veditarpr.setBd(bd);
+
+            }
+            veditarpr.setVisible(true);
             veditarpr.rellenarComboCat();
-            
+        } else {
+            JOptionPane.showMessageDialog(this, "No Existe Ninguna Categoría!", "Error categoría", JOptionPane.ERROR_MESSAGE);
         }
-        veditarpr.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

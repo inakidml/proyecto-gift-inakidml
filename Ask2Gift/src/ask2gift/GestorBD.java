@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -32,6 +33,7 @@ public class GestorBD {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@10.10.10.9:1521:db12102", "system", "oracle");
             System.out.println("INFO: Conexión abierta");
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(vprincipal, "Problema al conectar a la Base de Datos", "BD_ERROR", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -68,7 +70,16 @@ public class GestorBD {
             }
 
         } catch (SQLException ex) {
+            
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (vprincipal.getCategorias().size() > 0) {
+            for (Categoria categoria : vprincipal.getCategorias()) {
+                cargarListaPr(categoria);
+                for (Pregunta pregunta : categoria.getPreguntas()) {
+                    cargarListaRp(pregunta);
+                }
+            }
         }
 
         desconectar();
@@ -233,7 +244,7 @@ public class GestorBD {
     }
 
     public void modificarPr(Pregunta p) {
-conectar();
+        conectar();
         // Llamada a procedimiento almacenado
         // Creamos el statement
         String sql = "{ call UPDATES.UPDATE_PREGUNTA(?,?,?) }";
@@ -242,9 +253,9 @@ conectar();
             // Cargamos los parametros de entrada IN
             cs.setInt(1, p.getId_pr());
             cs.setString(2, p.getTexto_pr());
-            cs.setInt(3, p.getId_cat_pr()); 
+            cs.setInt(3, p.getId_cat_pr());
             cs.execute();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -252,7 +263,7 @@ conectar();
     }
 
     public void modificarRP(Respuesta r) {
-        
+
         conectar();
         // Llamada a procedimiento almacenado
         // Creamos el statement
@@ -262,9 +273,9 @@ conectar();
             // Cargamos los parametros de entrada IN
             cs.setInt(1, r.getId_resp());
             cs.setString(2, r.getTexto_rp());
-            cs.setInt(3, r.getValor()); 
+            cs.setInt(3, r.getValor());
             cs.execute();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
         }

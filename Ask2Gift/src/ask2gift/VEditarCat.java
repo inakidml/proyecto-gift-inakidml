@@ -32,7 +32,7 @@ public class VEditarCat extends javax.swing.JFrame {
         }
 
         jComboBox1.setModel(modelo);
-        
+
     }
 
     /**
@@ -96,6 +96,12 @@ public class VEditarCat extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -117,6 +123,11 @@ public class VEditarCat extends javax.swing.JFrame {
         );
 
         jButton2.setText("Aceptar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
 
@@ -162,19 +173,30 @@ public class VEditarCat extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Categoria c = new Categoria();
         String oldNombre = (String) jComboBox1.getSelectedItem();
-        String newNombre = (String) jTextField1.getText();
-        c.setNombre(newNombre);
-        if (!vprincipal.getCategorias().contains(c)) {
-            bd.editarCat(oldNombre, newNombre);
-            rellenarCombo();
-            
-        } else {
+        String newNombre = jTextField1.getText();
 
-            jLabel1.setText("¡Ya existe una categoría con ese nombre!");
+        if (!newNombre.equals("")) {
+            c.setNombre(newNombre);
+            if (!vprincipal.getCategorias().contains(c)) {
+                bd.editarCat(oldNombre, newNombre);
+                rellenarCombo();
+
+            } else {
+
+                jLabel1.setText("¡Ya existe una categoría con ese nombre!");
+            }
         }
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
     public void limpiar() {
         jLabel1.setText("");
         jTextField1.setText("");
