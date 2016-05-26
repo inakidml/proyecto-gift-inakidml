@@ -1,6 +1,6 @@
 {
   "name": "Proyecto-gift-inakidml",
   "tagline": "proyecto bd-java",
-  "body": "# Proyecto: Moodle GIFT\r\n\r\n\r\n[Archivo con CREATES y PL-SQL](https://github.com/inakidml/proyecto-gift-inakidml/blob/master/BD/SQL_para%20entrgar%20a%20Eider.sql)\r\n\r\n## Requisitos mínimos de funcionamiento\r\n\r\n\r\n\r\n## Fecha de entrega\r\n\r\n- El proyecto se entregará el día 26/05/2016.\r\n",
+  "body": "# Proyecto: Moodle GIFT\r\n\r\n##base de Datos Oracle\r\n###[Archivo con CREATES y PL-SQL](https://github.com/inakidml/proyecto-gift-inakidml/blob/master/BD/SQL_para%20entrgar%20a%20Eider.sql)\r\n\r\n##Java\r\n###[Ask2Gift for OS X](https://github.com/inakidml/proyecto-gift-inakidml/tree/master/Proyecto%20Compilado/OS%20X)\r\n###[Ask2Gift for Windows](https://github.com/inakidml/proyecto-gift-inakidml/tree/master/Proyecto%20Compilado/Win%20-%20Nimbus)\r\n\r\n\r\n",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
