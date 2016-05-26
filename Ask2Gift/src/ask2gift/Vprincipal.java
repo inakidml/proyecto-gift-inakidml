@@ -343,7 +343,7 @@ public class Vprincipal extends javax.swing.JFrame {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 //System.out.println(info.getName());
-                if ("Mac OS X".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     //System.out.println("Encontrado");
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
