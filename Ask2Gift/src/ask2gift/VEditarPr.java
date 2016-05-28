@@ -223,13 +223,15 @@ public class VEditarPr extends javax.swing.JFrame {
                     }
 
                 }
+                rellenarComboCat();
             } else {
+                rellenarComboCat();
                 jLabel1.setText("El textArea no puede estar vacio ni superar los 200 carácteres");
 
             }
 
         }
-        rellenarComboCat();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
